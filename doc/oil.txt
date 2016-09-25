@@ -1,0 +1,54 @@
+*oil.txt*	For Vim version 7.4	Last change: 2016 September 25
+
+==============================================================================
+INTRODUCTION                                                       *oil-intro*
+
+Plugin to create a |Netrw| Explorer Project Drawer.  It uses |Netrw| and
+complements |vim-vinegar|.
+
+It is created to those who like a Docked Explorer and for those new to Vim.
+It can even be useful to those who like the split-exploer approach. >
+"It still has its place, particularly during the orientation phase with a new
+codebase."
+- Drew Neil, Oil and vinegar Vimcast
+<
+
+Inspired by
+1. vim-vinegar [https://github.com/tpope/vim-vinegar], and
+2. the "Oil and vinegar" Vimcast
+[http://vimcasts.org/blog/2013/01/oil-and-vinegar-split-windows-and-project-drawer/]
+
+Note: It is only tested on Vim 7.4, but should work on older version too.
+
+==============================================================================
+MAPPINGS                                                        *oil-mappings*
+
+<Leader>e : Default mapping; maps to |OilCycle| by default.
+
+==============================================================================
+COMMANDS                                                        *oil-commands*
+
+<Plug>*OilCycle*
+Cycles through open Netrw windows,
+or Netrw buffers if there is only one Netrw window.
+
+<Plug>*OilToggle*
+Toggles display of the Drawer.
+
+==============================================================================
+SETTINGS                                                        *oil-settings*
+
+*g:oil_right*:  Display the drawer on the {rhs}, instead of {lhs}.
+*g:oil_toggle*: Set |OilToggle| as the default action, instead of |OilCycle|.
+
+==============================================================================
+CONTRIBUTIONS                                              *oil-contributions*
+
+Contributions and pull requests are welcome.
+
+==============================================================================
+LICENSE                                                          *oil-license*
+
+GPL v3 or later
+
+ vim:tw=78:ts=8:ft=help:norl:
