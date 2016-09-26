@@ -1,5 +1,5 @@
 " vim-oil
-" oil.Vim: combine with vinegar, or plain netrw, for a delicious salad dressing
+" oil.vim: combine with vinegar, or plain netrw, for a delicious salad dressing
 " Last Change: 2016-09-25
 " Maintainer:  go2null <1t1is2@gmail.com>
 " License:     GPL3+
@@ -10,14 +10,14 @@ endif
 "let g:loaded_oil = 1
 
 "# Mappings
-nnoremap <silent> <Plug>OilCycle  :call <SID>OilCycle()<CR>
-nnoremap <silent> <Plug>OilToggle :call <SID>OilToggle()<CR>
+nnoremap <silent> <Plug>OilWhisk  :call <SID>OilWhisk()<CR>
+nnoremap <silent> <Plug>OilShake :call <SID>OilShake()<CR>
 
 function! s:SetDefaultMapping()
   if exists('g:oil_toggle')
-    nmap <Leader>e <Plug>OilToggle
+    nmap <Leader>e <Plug>OilShake
   else
-    nmap <Leader>e <Plug>OilCycle
+    nmap <Leader>e <Plug>OilWhisk
   endif
 endfunction
 call s:SetDefaultMapping()
@@ -85,7 +85,7 @@ endfunction
 " | 1       | 2+      | is Netrw       | close window & next window |
 " | 2+      | 1       | is Netrw       | rotate next buffer       |
 " | 2+      | 2+      | is Netrw       | goto next window         |
-function! s:OilCycle()
+function! s:OilWhisk()
   let next_buffer = s:GetNextBufWinNumber('b')
   if next_buffer < 1               " new window & new buffer
     call s:NewWindow()

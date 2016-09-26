@@ -3,43 +3,58 @@
 ==============================================================================
 INTRODUCTION                                                       *oil-intro*
 
+<oil.vim: combine with vinegar, or plain netrw, for a delicious salad dressing
+>
+
 Plugin to create a |Netrw| Explorer Project Drawer.  It uses |Netrw| and
 complements |vim-vinegar|.
 
-It is created to those who like a Docked Explorer and for those new to Vim.
-It can even be useful to those who like the split-exploer approach. >
-"It still has its place, particularly during the orientation phase with a new
-codebase."
-- Drew Neil, Oil and vinegar Vimcast
+It is created for those who like a Docked Explorer and for those new to Vim.
+
+It can even be useful to those who like the split-windows-explorer approach. >
+  "[project drawer] still has its place, particularly during the orientation
+  phase with a new codebase."
+  - Drew Neil, Oil and vinegar Vimcast
 <
 
-Inspired by
+This plugin is inspired by
 1. vim-vinegar [https://github.com/tpope/vim-vinegar], and
 2. the "Oil and vinegar" Vimcast
-[http://vimcasts.org/blog/2013/01/oil-and-vinegar-split-windows-and-project-drawer/]
+   [http://vimcasts.org/blog/2013/01/oil-and-vinegar-split-windows-and-project-drawer/]
+3. my not finding one that uses Netrw to implement a project drawer, while
+   still allowing the split window approach, i.e., oil AND vinegar.
 
 Note: It is only tested on Vim 7.4, but should work on older version too.
 
 ==============================================================================
 MAPPINGS                                                        *oil-mappings*
 
-<Leader>e : Default mapping; maps to |OilCycle| by default.
+'<Leader>e' : 'e'xplore. Set to |OilWhisk| by default.
 
 ==============================================================================
 COMMANDS                                                        *oil-commands*
 
-<Plug>*OilCycle*
-Cycles through open Netrw windows,
-or Netrw buffers if there is only one Netrw window.
+<Plug>*OilWhisk*
+1. If there is no Netrw window, create one.
+2. If not in the Netrw window, go to it.
+3. If in a Netrw window and |g:oil_multi| is set
+    then cycle through the Netrw windows.
+4. Otherwise, cycle though the Netrw buffers,
+    or close the window if there is only one buffer.
 
-<Plug>*OilToggle*
-Toggles display of the Drawer.
+<Plug>*OilShake*
+1. If there is no Netrw window, create one.
+2. If not in the Netrw window, go to it.
+3. Otherwise close the current Netrw window.
 
 ==============================================================================
 SETTINGS                                                        *oil-settings*
 
-*g:oil_right*:  Display the drawer on the {rhs}, instead of {lhs}.
-*g:oil_toggle*: Set |OilToggle| as the default action, instead of |OilCycle|.
+The following settings are all boolean; set them to any value to enable them.
+*g:oil_right*:  Display the drawer on the right, instead of the left.
+*g:oil_multi*:  Allow more than one Netrw window. |OilWhisk| will cycle through
+                each window.
+*g:oil_shake*:  Set default mapping to |OilShake|.
 
 ==============================================================================
 CONTRIBUTIONS                                              *oil-contributions*
