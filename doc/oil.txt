@@ -6,7 +6,7 @@ INTRODUCTION                                                       *oil-intro*
 <oil.vim: combine with vinegar, or plain netrw, for a delicious salad dressing
 >
 Plugin to create a Netrw Explorer Project Drawer.  It uses |Netrw| and
-complements |vim-vinegar|.
+compliments |vim-vinegar|.
 
 It is created for those who like a Docked Explorer and for those new to Vim.
 
@@ -27,19 +27,19 @@ Note: It is only tested on Vim 7.4, but should work on older version too.
 
 ==============================================================================
 MAPPINGS                                                        *oil-mappings*
-
 '<Leader>e' : 'e'xplore. Set to |OilWhisk| by default.
 
 ==============================================================================
 COMMANDS                                                        *oil-commands*
 
 <Plug>*OilWhisk*
-1. If there is no Netrw window, create one.
-2. If not in the Netrw window, go to it.
-3. If in a Netrw window and |g:oil_multi| is set
-    then cycle through the Netrw windows.
-4. Otherwise, cycle though the Netrw buffers,
-    or close the window if there is only one buffer.
+1. If there is no Netrw window, then create one.
+2. If not in the Netrw window, then go to it.
+3. If in a Netrw window, then cycle through the Netrw windows.
+4. If only one Netrw window, then cycle though the Netrw buffers.
+5. If only one Netrw buffer, then switch to previous window.
+6. If no other window, then switch to previous buffer.
+7. If no other buffer, then do nothing.
 
 <Plug>*OilShake*
 1. If there is no Netrw window, create one.
@@ -50,10 +50,11 @@ COMMANDS                                                        *oil-commands*
 SETTINGS                                                        *oil-settings*
 
 The following settings are all boolean; set them to any value to enable them.
+*g:oil_skip*:   Set to 1 before sourcing to disable plugin.
 *g:oil_right*:  Display the drawer on the right, instead of the left.
 *g:oil_multi*:  Allow more than one Netrw window. |OilWhisk| will cycle through
                 each window.
-*g:oil_shake*:  Set default mapping to |OilShake|.
+*g:oil_shake*:  Set default mapping to |OilShake| to toggle the Netrw window.
 
 ==============================================================================
 CONTRIBUTIONS                                              *oil-contributions*
