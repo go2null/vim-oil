@@ -5,8 +5,7 @@ INTRODUCTION                                                       *oil-intro*
 
 <oil.vim: combine with vinegar, or plain netrw, for a delicious salad dressing
 >
-
-Plugin to create a |Netrw| Explorer Project Drawer.  It uses |Netrw| and
+Plugin to create a Netrw Explorer Project Drawer.  It uses |Netrw| and
 complements |vim-vinegar|.
 
 It is created for those who like a Docked Explorer and for those new to Vim.
