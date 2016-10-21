@@ -1,16 +1,18 @@
 " oil.vim: combine with vinegar, or plain netrw, for a delicious salad dressing
-" Last Change: 2016-09-25
+" Last Change: 2016-10-21
 " Maintainer:  go2null <1t1is2@gmail.com>
 " License:     GPL3+
 
-if exists("g:oil_skip") || &compatible | finish | endif
-"let g:oil_skip = 1
+if &compatible || exists("g:loaded_oil") | finish | endif
+"let g:loaded_oil = 1
 
 "# Mappings
 nnoremap <silent> <Plug>OilWhisk :call <SID>Whisk()<CR>
 nnoremap <silent> <Plug>OilShake :call <SID>Shake()<CR>
 
 function! s:SetDefaultMapping()
+	if exists('g:oil_no_map') | return | endif
+
 	if exists('g:oil_shake')
 		nmap <Leader>e <Plug>OilShake
 	else
@@ -110,21 +112,21 @@ function! s:Whisk()
 	endif
 
 	if &filetype !=# s:file_type       " current window is not netrw
-		execute next_window . 'wincmd w' " so goto netrw window
+		execute next_window . 'wincmd w' |" so goto netrw window
 		return
 	endif
 
 	if next_buffer == bufnr('%')       " current buffer is the only netrw buffer
 		if winnr('$') == 1               "   only one window
 			if bufnr('$') > 1              "     if >1 buffer
-				execute 'buffer #'           "       then goto alternate buffer
+				execute 'buffer #'           |"       then goto alternate buffer
 			endif                          "     else do nothing
 		endif
 		return
 	endif
 
 	if next_window == winnr()          " only 1 netrw window, but >1 netrw buffers
-		execute 'buffer ' . next_buffer  " so rotate buffer
+		execute 'buffer ' . next_buffer  |" so rotate buffer
 		return
 	endif
 

@@ -33,6 +33,7 @@ MAPPINGS                                                        *oil-mappings*
 COMMANDS                                                        *oil-commands*
 
 <Plug>*OilWhisk*
+Cycles between Netrw windows and buffers.
 1. If there is no Netrw window, then create one.
 2. If not in the Netrw window, then go to it.
 3. If in a Netrw window, then cycle through the Netrw windows.
@@ -42,6 +43,7 @@ COMMANDS                                                        *oil-commands*
 7. If no other buffer, then do nothing.
 
 <Plug>*OilShake*
+Toggles display of the Netrw window.
 1. If there is no Netrw window, create one.
 2. If not in the Netrw window, go to it.
 3. Otherwise close the current Netrw window.
@@ -50,11 +52,12 @@ COMMANDS                                                        *oil-commands*
 SETTINGS                                                        *oil-settings*
 
 The following settings are all boolean; set them to any value to enable them.
-*g:oil_skip*:   Set to 1 before sourcing to disable plugin.
+*g:loaded_oil*: Set to 1 before sourcing to disable plugin.
 *g:oil_right*:  Display the drawer on the right, instead of the left.
 *g:oil_multi*:  Allow more than one Netrw window. |OilWhisk| will cycle through
                 each window.
 *g:oil_shake*:  Set default mapping to |OilShake| to toggle the Netrw window.
+*g:oil_no_map*: Disable default key mapping (<Leader>e).
 
 ==============================================================================
 CONTRIBUTIONS                                              *oil-contributions*
