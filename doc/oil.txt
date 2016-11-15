@@ -42,7 +42,7 @@ Toggles display of the Netrw window.
 SETTINGS                                                        *oil-settings*
 
 The following settings are all boolean; set them to any value to enable them.
-*g:loaded_oil*: Set to 1 before sourcing to disable plugin.
+*g:loaded_oil*: Set before sourcing to disable plugin.
 *g:oil_right*:  Display the drawer on the right, instead of the left.
 *g:oil_multi*:  Allow more than one Netrw window. |OilWhisk| will cycle through
                 each window.
