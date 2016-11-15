@@ -87,82 +87,98 @@ endfunction
 "
 " | Buffers | Windows | Current Buffer | Action                   |
 " | ------- | ------- | -------------- | -------------------------|
-" | 0(n/a)  | 0 (n/a) | not Netrw (n/a)| new window & new buffer  |
-" | 1       | 0       | not Netrw (n/a)| new window & next buffer |
-" | 2+      | 0       | not Netrw (n/a)| new window & next buffer |
-" | 1       | 1       | not Netrw      | goto next window         |
-" | 1       | 2+      | not Netrw      | goto next window         |
-" | 2+      | 1       | not Netrw      | goto next window         |
-" | 2+      | 2+      | not Netrw      | goto next window         |
-" | 1       | 1       | is Netrw       | close window & next window |
-" | 1       | 2+      | is Netrw       | close window & next window |
-" | 2+      | 1       | is Netrw       | rotate next buffer       |
-" | 2+      | 2+      | is Netrw       | goto next window         |
+" | 0       | 0 (n/a) | not Netrw (n/a)| new window & new buffer  | 1
+" | 1       | 0       | not Netrw (n/a)| new window & next buffer | 2
+" | 2+      | 0       | not Netrw (n/a)| new window & next buffer | 2
+" | 1       | 1       | not Netrw      | goto next window         | 3
+" | 1       | 2+      | not Netrw      | goto next window         | 3
+" | 2+      | 1       | not Netrw      | goto next window         | 3
+" | 2+      | 2+      | not Netrw      | goto next window         | 3
+" | 1       | 2+      | is Netrw       | goto next window         | 3
+" | 2+      | 2+      | is Netrw       | goto next window         | 3
+" | 2+      | 1       | is Netrw       | rotate next buffer       | 4
+" | 1       | 1       | is Netrw       | goto alternate window    | 5
 function! s:Whisk()
+	call s:SetRuntimeOptions()
+
+	" Netrw loves to create new buffers
+	call s:WipeHiddenDuplicateNetrwBuffers()
+
 	let next_buffer = s:GetNextBufNr()
-	if next_buffer < 1              " no netrw buffer, no netrw window
-		call s:NewWindow()            " so create new netrw window
+	if next_buffer < 1                " #1: no netrw buffer, no netrw window
+		call s:NewWindow()              " so create new netrw window
 		return
 	endif
 
 	let next_window = s:GetNextWinNr()
-	if next_window < 1              " >=1 netrw buffers, no netrw windows
-		call s:NewWindow(next_buffer) " so new window with existing buffer
+	if next_window < 1                " #2: 1+ netrw buffers, no netrw windows
+		call s:NewWindow(next_buffer)   " so new window with existing buffer
 		return
 	endif
 
-	if &filetype !=# s:file_type       " current window is not netrw
+	" #3: current window is not netrw or another netrw window exists
+	if next_window != winnr()
 		execute next_window . 'wincmd w' |" so goto netrw window
 		return
 	endif
 
-	if next_buffer == bufnr('%')       " current buffer is the only netrw buffer
-		if winnr('$') == 1               "   only one window
-			if bufnr('$') > 1              "     if >1 buffer
-				execute 'buffer #'           |"       then goto alternate buffer
-			endif                          "     else do nothing
-		endif
-		return
-	endif
-
-	if next_window == winnr()          " only 1 netrw window, but >1 netrw buffers
+	if next_buffer != bufnr('%')       " #4: 2+ netrw buffers, 1 netrw window
 		execute 'buffer ' . next_buffer  |" so rotate buffer
 		return
 	endif
 
-	execute next_window . 'wincmd w'   " otherwise, >1 netrw window
+	if winnr('$') != 1                 " #5: 1+ windows
+		execute next_window . 'wincmd w' |" so goto alternate window
+		return
+	endif
+
+	if bufnr('$') != 1                 " #5: 1+ buffers
+		execute 'buffer #'               |" so goto alternate buffer
+	endif
+endfunction
+
+" | Buffers | Windows | Current Buffer | Action                   |
+" | ------- | ------- | -------------- | -------------------------|
+" | 0       | 0 (n/a) | not Netrw (n/a)| new window & new buffer  | 1
+" | 1       | 0       | not Netrw (n/a)| new window & next buffer | 2
+" | 2+      | 0       | not Netrw (n/a)| new window & next buffer | 2
+" | 1       | 1       | not Netrw      | goto next window         | 3
+" | 1       | 2+      | not Netrw      | goto next window         | 3
+" | 2+      | 1       | not Netrw      | goto next window         | 3
+" | 2+      | 2+      | not Netrw      | goto next window         | 3
+" | 1       | 2+      | is Netrw       | close & alt window       | 4
+" | 2+      | 2+      | is Netrw       | close & alt window       | 4
+" | 2+      | 1       | is Netrw       | close & alt window       | 4
+" | 1       | 1       | is Netrw       | close & alt window       | 4
+function! s:Shake()
+	call s:SetRuntimeOptions()
 
 	" Netrw loves to create new buffers
 	call s:WipeHiddenDuplicateNetrwBuffers()
-endfunction
 
-function! s:Shake()
-	if &filetype ==# s:file_type   " close current Netrw window
-		if winnr('$') == 1            " if last window, goto alternate buffer
-			execute 'buffer #'
+	if &filetype ==# s:file_type       "  #4: current window is netrw
+		if winnr('$') == 1               "  if last window
+			silent execute 'buffer #'      |" goto alternate buffer, if any
 		else
-			execute 'wincmd c'
+			execute 'wincmd c'             |" else just close window
 		endif
 		return
 	endif
 
 	let next_buffer = s:GetNextBufNr()
-	if next_buffer < 1              " new window & new buffer
-		call s:NewWindow()
+	if next_buffer < 1                 " #1: no netrw buffer, no netrw window
+		call s:NewWindow()               " so create new netrw window
 		return
 	endif
 
 	let next_window = s:GetNextWinNr()
-	if next_window < 1              " new window & next buffer
-		call s:NewWindow(next_buffer)
+	if next_window < 1                 " #2: 1+ netrw buffers, no netrw windows
+		call s:NewWindow(next_buffer)    " so new window with existing buffer
 		return
 	endif
 
-	" goto next window
-	execute next_window . 'wincmd w'
-
-	" Netrw loves to create new buffers
-	call s:WipeHiddenDuplicateNetrwBuffers()
+	" #3: a netrw window exists
+	execute next_window . 'wincmd w'   |" so goto netrw window
 endfunction
 
 " Usage: function(type)

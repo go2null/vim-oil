@@ -23,7 +23,7 @@ This plugin is inspired by
 3. my not finding one that uses Netrw to implement a project drawer, while
    still allowing the split window approach, i.e., oil AND vinegar.
 
-Note: It is only tested on Vim 7.4, but should work on older version too.
+Note: It is only tested on Vim 7.4, but should work on older versions too.
 
 ==============================================================================
 MAPPINGS                                                        *oil-mappings*
@@ -34,19 +34,9 @@ COMMANDS                                                        *oil-commands*
 
 <Plug>*OilWhisk*
 Cycles between Netrw windows and buffers.
-1. If there is no Netrw window, then create one.
-2. If not in the Netrw window, then go to it.
-3. If in a Netrw window, then cycle through the Netrw windows.
-4. If only one Netrw window, then cycle though the Netrw buffers.
-5. If only one Netrw buffer, then switch to previous window.
-6. If no other window, then switch to previous buffer.
-7. If no other buffer, then do nothing.
 
 <Plug>*OilShake*
 Toggles display of the Netrw window.
-1. If there is no Netrw window, create one.
-2. If not in the Netrw window, go to it.
-3. Otherwise close the current Netrw window.
 
 ==============================================================================
 SETTINGS                                                        *oil-settings*
